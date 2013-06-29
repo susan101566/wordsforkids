@@ -14,5 +14,6 @@
     <string name="title_activity_teacher_answer">Answer - Teacher</string>
     <string name="submit">Submit</string>
 	<string name="answer">Answer</string>
+	<string name="record">Record</string>
     
 </resources>

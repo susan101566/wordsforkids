@@ -3,20 +3,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
-	<ImageView android:id="@+id/picture"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content" />
-    
-	<EditText android:id="@+id/answer"
+
+    <ImageView
+        android:id="@+id/picture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/answer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:hint="@string/answer" />
-	
-	<Button android:text="@string/submit"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:onClick="submitAnswer" />
-	
+        android:hint="@string/answer"
+        android:textAlignment="center" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="recordAnswer"
+        android:text="@string/record" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="playAnswer"
+        android:text="@string/play" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="submitAnswer"
+        android:text="@string/submit" />
+
 </LinearLayout>

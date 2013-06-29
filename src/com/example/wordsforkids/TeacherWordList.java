@@ -166,17 +166,17 @@ public class TeacherWordList extends Activity {
     // Just a number so our intent listener doesn't listen for the wrong intent.
     private static final int REQUEST_IMAGE = 100;
     private File destination;
+    private String uuid;
 
     // When the new button is clicked.
     public void teacherAnswer(View view) {
         // The name of the new picture.
-        String filename = UUID.randomUUID().toString();
-        destination = new File(Utils.imageroot, filename + ".jpg");
+        uuid = UUID.randomUUID().toString();
+        destination = new File(Utils.imageroot, uuid + ".jpg");
 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(destination));
         startActivityForResult(intent, REQUEST_IMAGE);
-
     }
 
     @Override
@@ -186,6 +186,7 @@ public class TeacherWordList extends Activity {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             intent.putExtra("picture", destination.getAbsolutePath());
+            intent.putExtra("uuid", uuid + "");
             startActivity(intent);
         } else {
             Toast.makeText(this, "TeacheWordList: bad request", Toast.LENGTH_LONG).show();

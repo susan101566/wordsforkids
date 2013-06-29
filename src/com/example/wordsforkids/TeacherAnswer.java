@@ -2,15 +2,19 @@ package com.example.wordsforkids;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import com.example.utils.Utils;
 
 
+import android.media.MediaPlayer;
+import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +27,7 @@ import android.support.v4.app.NavUtils;
 public class TeacherAnswer extends Activity {
     
     private String imageName = null;
+    private String uuid = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +39,8 @@ public class TeacherAnswer extends Activity {
         ImageView picture = (ImageView) findViewById(R.id.picture);
         try {
             imageName = this.getIntent().getStringExtra("picture");
+            uuid = this.getIntent().getStringExtra("uuid");
+            this.audioFilename = Utils.getAudioFilename(uuid);
             FileInputStream in = new FileInputStream(imageName);
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 10;
@@ -93,6 +100,85 @@ public class TeacherAnswer extends Activity {
         Intent intent = new Intent(this, TeacherWordList.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+    }
+    
+    private boolean startRecording = true;
+    private boolean startPlaying = true;
+    private MediaRecorder mRecorder = null;
+    private MediaPlayer mPlayer = null;
+    private String audioFilename = null;
+    
+    private void onPlay(boolean start) {
+        if (start ){ 
+            startPlaying();
+        } else {
+            stopPlaying();
+        }
+    }
+    
+    private void onRecord(boolean start) {
+        if (start){
+            startRecording();
+        } else {
+            stopRecording();
+        }
+    }
+    
+    private void startPlaying() {
+       mPlayer = new MediaPlayer();
+       try {
+           mPlayer.setDataSource(audioFilename);
+           mPlayer.prepare();
+           mPlayer.start();
+       } catch (IOException e) {
+           Log.e("danggg!!", "prepare() failed");
+       }
+    }
+    
+    private void stopPlaying() {
+        mPlayer.release();
+        mPlayer = null;
+    }
+    
+    private void startRecording() {
+        mRecorder = new MediaRecorder();
+        mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        mRecorder.setOutputFile(audioFilename);
+        mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+
+        try {
+            mRecorder.prepare();
+        } catch (IOException e) {
+            Log.e("errrorrrrr!!", "prepare() failed");
+        }
+
+        mRecorder.start();
+    }
+    private void stopRecording() {
+        mRecorder.stop();
+        mRecorder.release();
+        mRecorder = null;
+    }
+    
+    public void recordAnswer(View view){
+       onRecord(startRecording);
+       if (startRecording){
+          Utils.showMsg(this, "start recording"); 
+       } else {
+          Utils.showMsg(this, "stop recording"); 
+       }
+       startRecording = !startRecording;
+    }
+    
+    public void playAnswer(View view) {
+        onPlay(startPlaying);
+        if (startPlaying){
+          Utils.showMsg(this, "start playing"); 
+       } else {
+          Utils.showMsg(this, "stop playing"); 
+       }
+       startPlaying = !startPlaying;
     }
 
 }

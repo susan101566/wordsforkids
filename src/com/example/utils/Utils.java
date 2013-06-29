@@ -12,6 +12,10 @@ public class Utils {
     public static File imageroot = new File(Environment.getExternalStorageDirectory() + File.separator + "WFK"
             + File.separator);
     
+    public static String getAudioFilename(String uuid) {
+        return imageroot.getAbsolutePath() + "/" + uuid + ".3gp";
+    }
+    
     public static void showMsg(Context c, String msg){
         Toast.makeText(c, msg, Toast.LENGTH_SHORT).show();
         
