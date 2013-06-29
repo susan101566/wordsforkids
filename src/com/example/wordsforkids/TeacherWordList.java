@@ -36,6 +36,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class TeacherWordList extends Activity {
+	public final static String WORD_ID = "com.example.wordsforkids.WORD_ID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,9 +75,15 @@ public class TeacherWordList extends Activity {
         mListView.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // TODO Auto-generated method stub
-                Utils.showMsg(c, "clicked on list item!");
+//                Utils.showMsg(c, "" + position);
+            	
+            	Intent intent = new Intent(TeacherWordList.this, TeacherAnswer.class);
+				intent.putExtra(WORD_ID, photos.get(position).getID()+"");
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+				intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+				startActivity(intent);
             }
         });
     }
@@ -189,6 +196,7 @@ public class TeacherWordList extends Activity {
 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(destination));
+        intent.putExtra(WORD_ID, "new");
         startActivityForResult(intent, REQUEST_IMAGE);
     }
 

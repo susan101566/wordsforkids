@@ -28,6 +28,8 @@ public class TeacherAnswer extends Activity {
     
     private String imageName = null;
     private String uuid = null;
+    
+    private int editId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,18 +38,46 @@ public class TeacherAnswer extends Activity {
         // Show the Up button in the action bar.
         setupActionBar();
 
+        Intent intent = getIntent();
+        String word_id = intent.getStringExtra(TeacherWordList.WORD_ID);
+        if (word_id == "new") {
+        	editId = -1;
+        } else {
+        	editId = Integer.parseInt(word_id);
+        }
+        
         ImageView picture = (ImageView) findViewById(R.id.picture);
-        try {
-            imageName = this.getIntent().getStringExtra("picture");
-            uuid = this.getIntent().getStringExtra("uuid");
-            this.audioFilename = Utils.getAudioFilename(uuid);
-            FileInputStream in = new FileInputStream(imageName);
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 10;
-            Bitmap bmp = BitmapFactory.decodeStream(in, null, options);
-            picture.setImageBitmap(bmp);
-        } catch (FileNotFoundException e) {
-            Toast.makeText(this, "file not found", Toast.LENGTH_LONG).show();
+        if (editId == -1) {
+		    try {
+		        imageName = this.getIntent().getStringExtra("picture");
+		        uuid = this.getIntent().getStringExtra("uuid");
+		        this.audioFilename = Utils.getAudioFilename(uuid);
+		        FileInputStream in = new FileInputStream(imageName);
+		        BitmapFactory.Options options = new BitmapFactory.Options();
+		        options.inSampleSize = 10;
+		        Bitmap bmp = BitmapFactory.decodeStream(in, null, options);
+		        picture.setImageBitmap(bmp);
+		    } catch (FileNotFoundException e) {
+		        Toast.makeText(this, "file not found", Toast.LENGTH_LONG).show();
+		    }
+        } else {
+        	FileInputStream in;
+        	Photo photo = WordListOpenHelper.getInstance(this).getPhoto(editId);
+            try {
+                imageName = photo.getFilename();
+                uuid = Utils.getUUIDFromPicFilename(imageName);
+                this.audioFilename = Utils.getAudioFilename(uuid);
+                in = new FileInputStream(imageName);
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inSampleSize = 10;
+                Bitmap bmp = BitmapFactory.decodeStream(in, null, options);
+                picture.setImageBitmap(bmp);
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            EditText editText = (EditText) findViewById(R.id.answer);
+            editText.setText(photo.getAnswer());
         }
     }
 
@@ -90,13 +120,27 @@ public class TeacherAnswer extends Activity {
             Utils.showMsg(this, "Please enter description.");
             return;
         }
-        Photo newPhoto = new Photo(123, imageName, answer);
-        boolean status = WordListOpenHelper.getInstance(this).addPhoto(newPhoto);
+        
+        boolean status;
+        if (editId == -1) {
+        	Photo newPhoto = new Photo(123, imageName, answer);
+        	status = WordListOpenHelper.getInstance(this).addPhoto(newPhoto);
+        } else {
+        	Photo photo = new Photo(editId, imageName, answer);
+        	int statusId = WordListOpenHelper.getInstance(this).updatePhoto(photo);
+//        	Utils.showMsg(this, ""+statusId);
+        	if (statusId >=0) status = true;
+        	else status = false;
+        }
         if (status == false) {
             Utils.showMsg(this, "Sorry, something wrong happened in the database.");
             return;
         }
-        Utils.showMsg(this, "Stored!");
+        if (editId == -1) {
+        	Utils.showMsg(this, "Stored!");
+        } else {
+        	Utils.showMsg(this, "Updated!");
+        }
         Intent intent = new Intent(this, TeacherWordList.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
