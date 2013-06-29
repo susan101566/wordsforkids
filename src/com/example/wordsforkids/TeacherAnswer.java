@@ -61,7 +61,7 @@ public class TeacherAnswer extends Activity {
 		        Bitmap bmp = BitmapFactory.decodeStream(in, null, options);
 		        picture.setImageBitmap(bmp);
 		    } catch (FileNotFoundException e) {
-		        Toast.makeText(this, "file not found", Toast.LENGTH_LONG).show();
+		        Toast.makeText(this, "Can't find the file... Sorry", Toast.LENGTH_LONG).show();
 		    }
 		    
 		    Button deleteButton = (Button) findViewById(R.id.deleteButton);
