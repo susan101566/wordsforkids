@@ -5,25 +5,24 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import com.example.utils.Utils;
-
-
-import android.media.MediaPlayer;
-import android.media.MediaRecorder;
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
+import android.media.MediaRecorder;
+import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.support.v4.app.NavUtils;
+
+import com.example.utils.Utils;
 
 public class TeacherAnswer extends Activity {
     
@@ -172,20 +171,24 @@ public class TeacherAnswer extends Activity {
     
     public void recordAnswer(View view){
        onRecord(startRecording);
+       Button recButton = (Button) findViewById(R.id.recButton);
        if (startRecording){
-          Utils.showMsg(this, "start recording"); 
+    	   recButton.setText("Stop Recording");
        } else {
-          Utils.showMsg(this, "stop recording"); 
+    	   recButton.setText("Start Recording");
        }
        startRecording = !startRecording;
     }
     
     public void playAnswer(View view) {
         onPlay(startPlaying);
+//        Button playButton = (Button) findViewById(R.id.playButton);
         if (startPlaying){
-          Utils.showMsg(this, "start playing"); 
+//        	playButton.setText("Stop");
+//          Utils.showMsg(this, "start playing"); 
        } else {
-          Utils.showMsg(this, "stop playing"); 
+//    	   playButton.setText("Play");
+//          Utils.showMsg(this, "stop playing"); 
        }
        startPlaying = !startPlaying;
     }
