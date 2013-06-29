@@ -5,6 +5,7 @@
     android:numColumns="2"
     android:verticalSpacing="10dp"
     android:horizontalSpacing="10dp"
+    android:background="@color/greenboard"
     android:stretchMode="columnWidth"
     android:layout_margin="30dp"
     android:gravity="center"
