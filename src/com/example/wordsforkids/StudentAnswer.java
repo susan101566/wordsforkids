@@ -1,16 +1,25 @@
 package com.example.wordsforkids;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class StudentAnswer extends Activity {
+	
+	private int id;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -21,13 +30,23 @@ public class StudentAnswer extends Activity {
 		
 		Intent intent = getIntent();
 		String wordId = intent.getStringExtra(StudentWordList.WORD_ID);
+		id = Integer.parseInt(wordId);
 		
 		TextView idText = (TextView) findViewById(R.id.wordId);
 		idText.setText(wordId);
 		
 		ImageView img = (ImageView) findViewById(R.id.picture);
-		img.setImageResource(R.drawable.sample_0);
-		
+		FileInputStream in;
+		try {
+			in = new FileInputStream(WordListOpenHelper.getInstance(this).getPhoto(id).getFilename());
+	        BitmapFactory.Options options = new BitmapFactory.Options();
+	        options.inSampleSize = 10;
+	        Bitmap bmp = BitmapFactory.decodeStream(in, null, options);
+			img.setImageBitmap(bmp);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -65,8 +84,18 @@ public class StudentAnswer extends Activity {
 
 	
 	public void submitAnswer(View view) {
-		Intent intent = new Intent(this, StudentWordList.class);
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(intent);
+//		Intent intent = new Intent(this, StudentWordList.class);
+//		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//		startActivity(intent);
+		
+		String correctAnswer = WordListOpenHelper.getInstance(this).getPhoto(id).getAnswer();
+		EditText editText = (EditText) findViewById(R.id.answer);
+		String inputText = editText.getText().toString();
+		if (correctAnswer.equalsIgnoreCase(inputText)) {
+			editText.setEnabled(false);
+			Toast.makeText(this, "Correct!", Toast.LENGTH_LONG).show();
+		} else {
+			Toast.makeText(this, "Wrong...", Toast.LENGTH_SHORT).show();
+		}
 	}
 }
