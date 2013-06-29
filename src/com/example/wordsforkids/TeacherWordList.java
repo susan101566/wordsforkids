@@ -172,11 +172,16 @@ public class TeacherWordList extends Activity {
     public void teacherAnswer(View view) {
         // The name of the new picture.
         uuid = UUID.randomUUID().toString();
+        File root = Utils.imageroot;
+        if (!root.exists()){
+            root.mkdirs();
+        }
         destination = new File(Utils.imageroot, uuid + ".jpg");
 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(destination));
         startActivityForResult(intent, REQUEST_IMAGE);
+        Utils.showMsg(this, Utils.imageroot.getAbsolutePath());
     }
 
     @Override

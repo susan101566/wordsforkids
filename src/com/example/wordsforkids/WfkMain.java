@@ -1,5 +1,7 @@
 package com.example.wordsforkids;
 
+import com.example.utils.Utils;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

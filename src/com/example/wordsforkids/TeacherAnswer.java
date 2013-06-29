@@ -109,7 +109,7 @@ public class TeacherAnswer extends Activity {
     private String audioFilename = null;
     
     private void onPlay(boolean start) {
-        if (start ){ 
+        if (start){ 
             startPlaying();
         } else {
             stopPlaying();
