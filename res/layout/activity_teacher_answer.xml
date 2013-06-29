@@ -28,10 +28,11 @@
         android:onClick="playAnswer"
         android:text="@string/play" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="submitAnswer"
-        android:text="@string/submit" />
-
+	<Button android:id="@+id/submitButton" 
+	    android:text="@string/submit"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="center"
+	    android:onClick="submitAnswer" />
+	
 </LinearLayout>
