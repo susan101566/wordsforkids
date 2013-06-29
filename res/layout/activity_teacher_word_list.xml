@@ -10,10 +10,12 @@
         android:layout_height="wrap_content" >
     </ListView>
 
-    <Button
+    <ImageView android:src="@drawable/new_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="teacherAnswer"
-        android:text="@string/new_word" />
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:contentDescription="@string/new_word" />
     
 </LinearLayout>
