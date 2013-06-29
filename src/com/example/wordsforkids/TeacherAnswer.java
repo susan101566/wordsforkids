@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.utils.Utils;
+import com.example.wordsforkids.R.drawable;
 
 public class TeacherAnswer extends Activity {
     
@@ -221,11 +222,15 @@ public class TeacherAnswer extends Activity {
     
     public void recordAnswer(View view){
        onRecord(startRecording);
-       Button recButton = (Button) findViewById(R.id.recButton);
+       ImageView recButton = (ImageView) findViewById(R.id.recButton);
        if (startRecording){
-    	   recButton.setText("Stop Recording");
+//    	   recButton.setText("Stop Recording");
+    	   recButton.setContentDescription("Stop Recording");
+    	   recButton.setImageResource(drawable.stop_recording_button);
        } else {
-    	   recButton.setText("Start Recording");
+//    	   recButton.setText("Start Recording");
+    	   recButton.setContentDescription("Start Recording");
+    	   recButton.setImageResource(drawable.start_recording_button);
        }
        startRecording = !startRecording;
     }
