@@ -11,11 +11,15 @@ import android.graphics.BitmapFactory;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v4.app.NavUtils;
 
 public class TeacherAnswer extends Activity {
+    
+    private String imageName = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +30,7 @@ public class TeacherAnswer extends Activity {
 
         ImageView picture = (ImageView) findViewById(R.id.picture);
         try {
-            String imageName = this.getIntent().getStringExtra("picture");
+            imageName = this.getIntent().getStringExtra("picture");
             FileInputStream in = new FileInputStream(imageName);
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 10;
@@ -68,7 +72,17 @@ public class TeacherAnswer extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    // When the submit button is clicked.
     public void submitAnswer(View view) {
+        EditText answerView = (EditText) findViewById(R.id.answer);
+        String answer = answerView.getText().toString();
+        if (answer == ""){
+            Toast.makeText(this, "Please enter a description.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        
+        
+        
         Intent intent = new Intent(this, TeacherWordList.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);

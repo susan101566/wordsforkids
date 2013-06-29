@@ -10,6 +10,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class WordListOpenHelper extends SQLiteOpenHelper {
+    
+    public static WordListOpenHelper me;
+    
+    public static WordListOpenHelper getInstance (Context c){
+       if (me == null) {
+           me = new WordListOpenHelper(c);
+       }
+       return me;
+    }
 
 	private static final int DATABASE_VERSION = 1;
 	
@@ -21,7 +30,7 @@ public class WordListOpenHelper extends SQLiteOpenHelper {
 	private static final String KEY_FILENAME = "filename";
 	private static final String KEY_ANSWER = "answer";
 	
-	public WordListOpenHelper(Context context) {
+	private WordListOpenHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
 	
