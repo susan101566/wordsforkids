@@ -2,6 +2,7 @@ package com.example.wordsforkids;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Locale;
 
 import com.example.utils.Utils;
@@ -10,6 +11,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
@@ -27,6 +29,7 @@ import android.widget.Toast;
 public class StudentAnswer extends Activity {
 
     private int id;
+    private String picFilename;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +44,8 @@ public class StudentAnswer extends Activity {
         ImageView img = (ImageView) findViewById(R.id.picture);
         FileInputStream in;
         try {
-            in = new FileInputStream(WordListOpenHelper.getInstance(this).getPhoto(id).getFilename());
+            picFilename = WordListOpenHelper.getInstance(this).getPhoto(id).getFilename();
+            in = new FileInputStream(picFilename);
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 10;
             Bitmap bmp = BitmapFactory.decodeStream(in, null, options);
@@ -85,6 +89,18 @@ public class StudentAnswer extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void speakAnswer(View view) {
+        String audioPath = Utils.getAudioFilename(Utils.getUUIDFromPicFilename(picFilename));
+        MediaPlayer mPlayer = new MediaPlayer();
+        try {
+            mPlayer.setDataSource(audioPath);
+            mPlayer.prepare();
+            mPlayer.start();
+        } catch (IOException e) {
+            Log.e("danggg!!", "prepare() failed");
+        }
+    }
+    
     public void submitAnswer(View view) {
         // Intent intent = new Intent(this, StudentWordList.class);
         // intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

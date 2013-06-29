@@ -3,6 +3,7 @@ package com.example.wordsforkids;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 import java.util.Vector;
@@ -177,11 +178,18 @@ public class TeacherWordList extends Activity {
             root.mkdirs();
         }
         destination = new File(Utils.imageroot, uuid + ".jpg");
+        try {
+            destination.createNewFile();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        if (!destination.exists())
+            Utils.showMsg(this, "WHY!!");
 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(destination));
         startActivityForResult(intent, REQUEST_IMAGE);
-        Utils.showMsg(this, Utils.imageroot.getAbsolutePath());
     }
 
     @Override

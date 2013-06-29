@@ -6,14 +6,23 @@ import java.io.OutputStream;
 
 import android.content.Context;
 import android.os.Environment;
+import android.util.Log;
 import android.widget.Toast;
 
 public class Utils {
-    public static File imageroot = new File(Environment.getExternalStorageDirectory() + File.separator + "WFK"
-            + File.separator);
+    public static File imageroot = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "Android"
+            + File.separator + "data" + File.separator + "com.example.wordsforkids"+ File.separator);
     
     public static String getAudioFilename(String uuid) {
         return imageroot.getAbsolutePath() + "/" + uuid + ".3gp";
+    }
+    
+    public static String getUUIDFromPicFilename(String filename) {
+        Log.d("about to call split", filename);
+        String[] substrings = filename.split("/");
+        String uri = substrings[substrings.length-1];
+        Log.d("about to call split again", uri);
+       return uri.substring(0, uri.lastIndexOf('.')); 
     }
     
     public static void showMsg(Context c, String msg){
