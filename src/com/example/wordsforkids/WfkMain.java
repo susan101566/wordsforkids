@@ -2,14 +2,15 @@ package com.example.wordsforkids;
 
 import java.io.File;
 
-import com.example.utils.Utils;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.Menu;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+
+import com.example.utils.Utils;
 
 public class WfkMain extends Activity {
 
@@ -20,6 +21,10 @@ public class WfkMain extends Activity {
             file.mkdirs();
         }
 //        Utils.showMsg(this, file.exists() + "");
+        
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
+                                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wfk_main);
     }
