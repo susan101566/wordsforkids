@@ -191,8 +191,8 @@ public class TeacherWordList extends Activity {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        if (!destination.exists())
-            Utils.showMsg(this, "WHY!!");
+//        if (!destination.exists())
+//            Utils.showMsg(this, "WHY!!");
 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(destination));
