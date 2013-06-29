@@ -17,6 +17,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/answer"
         android:singleLine="true"
+        android:textSize="30sp"
         android:textAlignment="center" />
 
     <LinearLayout android:layout_width="match_parent"
@@ -46,18 +47,24 @@
             style="@android:attr/buttonBarButtonStyle" />
     </LinearLayout>
 
-	<Button android:id="@+id/submitButton" 
-	    android:text="@string/submit"
+	<ImageView android:id="@+id/submitButton" 
+	    android:contentDescription="@string/submit"
+	    android:src="@drawable/submit_button"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:layout_gravity="center"
+	    android:paddingLeft="40dp"
+	    android:paddingRight="40dp"
 	    android:onClick="submitAnswer" />
 	
-	<Button android:id="@+id/deleteButton"
-	    android:text="@string/delete"
+	<ImageView android:id="@+id/deleteButton"
+	    android:contentDescription="@string/delete"
+	    android:src="@drawable/delete_button"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:layout_gravity="bottom"
+	    android:paddingLeft="40dp"
+	    android:paddingRight="40dp"
 	    android:onClick="deletePhoto" />
 	
 </LinearLayout>
