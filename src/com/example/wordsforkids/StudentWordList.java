@@ -137,9 +137,9 @@ public class StudentWordList extends Activity {
 //            text.setText(position + "");
             text.setText(scores.get(position));
             if (Integer.parseInt(scores.get(position)) <= 0) {
-            	text.setTextColor(Color.parseColor("#FF0000"));
+            	text.setTextColor(Color.parseColor("#FE4365"));
             } else {
-            	text.setTextColor(Color.parseColor("#00FF00"));
+            	text.setTextColor(Color.parseColor("#774F38"));
             }
             displayImage(data.get(position), image);
             return vi;
