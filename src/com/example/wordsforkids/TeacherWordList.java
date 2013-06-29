@@ -53,6 +53,8 @@ public class TeacherWordList extends Activity {
 	
 	public void teacherAnswer(View view) {
 		Intent intent = new Intent(this, TeacherAnswer.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 		startActivity(intent);
 	}
 

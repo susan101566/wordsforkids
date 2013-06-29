@@ -2,8 +2,10 @@ package com.example.wordsforkids;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.support.v4.app.NavUtils;
 
 public class TeacherAnswer extends Activity {
@@ -47,6 +49,12 @@ public class TeacherAnswer extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	public void submitAnswer(View view) {
+		Intent intent = new Intent(this, TeacherWordList.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
 	}
 
 }

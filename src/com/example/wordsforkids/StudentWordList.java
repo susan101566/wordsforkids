@@ -30,6 +30,8 @@ public class StudentWordList extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Intent intent = new Intent(StudentWordList.this, StudentAnswer.class);
 				intent.putExtra(WORD_ID, ""+position);
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+				intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 				startActivity(intent);
 //				Toast.makeText(StudentWordList.this, "" + position, Toast.LENGTH_SHORT).show();
 			}

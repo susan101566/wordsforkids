@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -62,4 +63,10 @@ public class StudentAnswer extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
+	
+	public void submitAnswer(View view) {
+		Intent intent = new Intent(this, StudentWordList.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
+	}
 }
