@@ -1,8 +1,10 @@
 package com.example.wordsforkids;
 
-import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
 
 public class WfkMain extends Activity {
 
@@ -19,4 +21,13 @@ public class WfkMain extends Activity {
         return true;
     }
 
+    public void studentWordList(View view) {
+    	Intent intent = new Intent(this, StudentWordList.class);
+    	startActivity(intent);
+    }
+    
+    public void teacherWordList(View view) {
+    	Intent intent = new Intent(this, TeacherWordList.class);
+    	startActivity(intent);
+    }
 }

@@ -22,6 +22,38 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.example.wordsforkids.StudentWordList"
+            android:label="@string/title_activity_student_word_list"
+            android:parentActivityName="com.example.wordsforkids.WfkMain" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.wordsforkids.WfkMain" />
+        </activity>
+        <activity
+            android:name="com.example.wordsforkids.TeacherWordList"
+            android:label="@string/title_activity_teacher_word_list"
+            android:parentActivityName="com.example.wordsforkids.WfkMain" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.wordsforkids.WfkMain" />
+        </activity>
+        <activity
+            android:name="com.example.wordsforkids.StudentAnswer"
+            android:label="@string/title_activity_student_answer"
+            android:parentActivityName="com.example.wordsforkids.StudentWordList" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.wordsforkids.StudentWordList" />
+        </activity>
+        <activity
+            android:name="com.example.wordsforkids.TeacherAnswer"
+            android:label="@string/title_activity_teacher_answer"
+            android:parentActivityName="com.example.wordsforkids.TeacherWordList" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.wordsforkids.TeacherWordList" />
+        </activity>
     </application>
 
 </manifest>
