@@ -64,7 +64,7 @@ public class TeacherAnswer extends Activity {
 		        Toast.makeText(this, "Can't find the file... Sorry", Toast.LENGTH_LONG).show();
 		    }
 		    
-		    Button deleteButton = (Button) findViewById(R.id.deleteButton);
+		    ImageView deleteButton = (ImageView) findViewById(R.id.deleteButton);
 		    deleteButton.setVisibility(View.GONE); // for gone. 
         } else {
         	FileInputStream in;

@@ -108,9 +108,11 @@ public class StudentAnswer extends Activity {
         Photo photo = WordListOpenHelper.getInstance(this).getPhoto(id);
         String correctAnswer = photo.getAnswer();
         EditText editText = (EditText) findViewById(R.id.answer);
-        Button button = (Button) findViewById(R.id.submitButton);
+        ImageView button = (ImageView) findViewById(R.id.submitButton);
         String inputText = editText.getText().toString();
-        if (correctAnswer.equalsIgnoreCase(inputText)) {
+        if (editText.isEnabled() == false) {
+        	//Do nth if editText is disabled. 
+        } else if (correctAnswer.equalsIgnoreCase(inputText)) {
             editText.setEnabled(false);
             button.setEnabled(false);
             photo.incrementScore();
