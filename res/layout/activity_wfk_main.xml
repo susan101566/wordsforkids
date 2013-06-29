@@ -4,27 +4,38 @@
     android:layout_height="match_parent"
     android:background="@color/greenboard"
     android:layout_gravity="center" 
-    android:orientation="horizontal" >
-    
-     <ImageView
-        android:layout_width="122dp"
-        android:layout_height="122dp"
-        android:src="@drawable/title" />
-    
-    <ImageView
-        android:layout_width="0dp"
-        android:layout_height="122dp"
-        android:layout_weight="1"
-        android:contentDescription="@string/teacher"
-        android:onClick="teacherWordList"
-        android:src="@drawable/teacher_title" />
+    android:orientation="vertical" >
 
-    <ImageView
-        android:layout_width="0dp"
-        android:layout_height="122dp"
-        android:layout_weight="1"
-        android:contentDescription="@string/student"
-        android:onClick="studentWordList"
-        android:src="@drawable/student_title" />
+	<ImageView
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:contentDescription="@string/app_name"
+	        android:layout_gravity="center"
+	        android:src="@drawable/title" 
+	        android:layout_marginTop="100dp"
+	        />
+	
+	<LinearLayout android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:layout_gravity="center" 
+	    android:orientation="horizontal" >
+	    
+	    <ImageView
+	        android:layout_width="0dp"
+	        android:layout_height="122dp"
+	        android:layout_weight="1"
+	        android:contentDescription="@string/teacher"
+	        android:onClick="teacherWordList"
+	        android:src="@drawable/teacher_title" />
+	
+	    <ImageView
+	        android:layout_width="0dp"
+	        android:layout_height="122dp"
+	        android:layout_weight="1"
+	        android:contentDescription="@string/student"
+	        android:onClick="studentWordList"
+	        android:src="@drawable/student_title" />
+	
+	</LinearLayout>
 
 </LinearLayout>
