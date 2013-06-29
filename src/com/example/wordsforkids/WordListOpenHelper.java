@@ -8,6 +8,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class WordListOpenHelper extends SQLiteOpenHelper {
     
@@ -34,6 +35,7 @@ public class WordListOpenHelper extends SQLiteOpenHelper {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
 	
+	@Override
 	public void onCreate(SQLiteDatabase db) {
 		String CREATE_PHOTOS_TABLE = "CREATE TABLE " + TABLE_PHOTOS + "("
 				+ KEY_ID + " INTEGER PRIMARY KEY," 
@@ -52,16 +54,22 @@ public class WordListOpenHelper extends SQLiteOpenHelper {
 	}
 	
 	
+	public void deleteDatabase() {
+	    SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PHOTOS);
+        onCreate(db);
+	}
+	
 	// Adding new photo
-	public void addPhoto(Photo photo) {
+	public boolean addPhoto(Photo photo) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		
 		ContentValues values = new ContentValues();
 		values.put(KEY_FILENAME, photo.getFilename());
 		values.put(KEY_ANSWER, photo.getAnswer());
-		
-		db.insert(TABLE_PHOTOS, null, values);
+		boolean result = db.insert(TABLE_PHOTOS, null, values) < 0 ? false : true;
 		db.close();
+		return result;
 	}
 	 
 	// Getting single photo

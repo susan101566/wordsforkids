@@ -3,6 +3,8 @@ package com.example.wordsforkids;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+import utils.Utils;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -76,13 +78,17 @@ public class TeacherAnswer extends Activity {
     public void submitAnswer(View view) {
         EditText answerView = (EditText) findViewById(R.id.answer);
         String answer = answerView.getText().toString();
-        if (answer == ""){
-            Toast.makeText(this, "Please enter a description.", Toast.LENGTH_SHORT).show();
+        if (answer.length() == 0){
+            Utils.showMsg(this, "Please enter description.");
             return;
         }
-        
-        
-        
+        Photo newPhoto = new Photo(123, imageName, answer);
+        boolean status = WordListOpenHelper.getInstance(this).addPhoto(newPhoto);
+        if (status == false) {
+            Utils.showMsg(this, "Sorry, something wrong happened in the database.");
+            return;
+        }
+        Utils.showMsg(this, "Stored!");
         Intent intent = new Intent(this, TeacherWordList.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
