@@ -5,30 +5,31 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import com.example.utils.Utils;
-
-
-import android.media.MediaPlayer;
-import android.media.MediaRecorder;
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
+import android.media.MediaRecorder;
+import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.support.v4.app.NavUtils;
+
+import com.example.utils.Utils;
 
 public class TeacherAnswer extends Activity {
     
     private String imageName = null;
     private String uuid = null;
+    
+    private int editId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,18 +38,52 @@ public class TeacherAnswer extends Activity {
         // Show the Up button in the action bar.
         setupActionBar();
 
+        Intent intent = getIntent();
+        String word_id = intent.getStringExtra(TeacherWordList.WORD_ID);
+        if (word_id == null) {
+        	editId = -1;
+        }
+        else if (word_id.contains("n")) {
+        	editId = -1;
+        } else {
+        	editId = Integer.parseInt(word_id);
+        }
+        
         ImageView picture = (ImageView) findViewById(R.id.picture);
-        try {
-            imageName = this.getIntent().getStringExtra("picture");
-            uuid = this.getIntent().getStringExtra("uuid");
-            this.audioFilename = Utils.getAudioFilename(uuid);
-            FileInputStream in = new FileInputStream(imageName);
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 10;
-            Bitmap bmp = BitmapFactory.decodeStream(in, null, options);
-            picture.setImageBitmap(bmp);
-        } catch (FileNotFoundException e) {
-            Toast.makeText(this, "file not found", Toast.LENGTH_LONG).show();
+        if (editId == -1) {
+		    try {
+		        imageName = this.getIntent().getStringExtra("picture");
+		        uuid = this.getIntent().getStringExtra("uuid");
+		        this.audioFilename = Utils.getAudioFilename(uuid);
+		        FileInputStream in = new FileInputStream(imageName);
+		        BitmapFactory.Options options = new BitmapFactory.Options();
+		        options.inSampleSize = 10;
+		        Bitmap bmp = BitmapFactory.decodeStream(in, null, options);
+		        picture.setImageBitmap(bmp);
+		    } catch (FileNotFoundException e) {
+		        Toast.makeText(this, "file not found", Toast.LENGTH_LONG).show();
+		    }
+		    
+		    Button deleteButton = (Button) findViewById(R.id.deleteButton);
+		    deleteButton.setVisibility(View.GONE); // for gone. 
+        } else {
+        	FileInputStream in;
+        	Photo photo = WordListOpenHelper.getInstance(this).getPhoto(editId);
+            try {
+                imageName = photo.getFilename();
+                uuid = Utils.getUUIDFromPicFilename(imageName);
+                this.audioFilename = Utils.getAudioFilename(uuid);
+                in = new FileInputStream(imageName);
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inSampleSize = 10;
+                Bitmap bmp = BitmapFactory.decodeStream(in, null, options);
+                picture.setImageBitmap(bmp);
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            EditText editText = (EditText) findViewById(R.id.answer);
+            editText.setText(photo.getAnswer());
         }
     }
 
@@ -91,13 +126,27 @@ public class TeacherAnswer extends Activity {
             Utils.showMsg(this, "Please enter description.");
             return;
         }
-        Photo newPhoto = new Photo(123, imageName, answer);
-        boolean status = WordListOpenHelper.getInstance(this).addPhoto(newPhoto);
+        
+        boolean status;
+        if (editId == -1) {
+        	Photo newPhoto = new Photo(123, imageName, answer);
+        	status = WordListOpenHelper.getInstance(this).addPhoto(newPhoto);
+        } else {
+        	Photo photo = new Photo(editId, imageName, answer);
+        	int statusId = WordListOpenHelper.getInstance(this).updatePhoto(photo);
+//        	Utils.showMsg(this, ""+statusId);
+        	if (statusId >=0) status = true;
+        	else status = false;
+        }
         if (status == false) {
             Utils.showMsg(this, "Sorry, something wrong happened in the database.");
             return;
         }
-        Utils.showMsg(this, "Stored!");
+        if (editId == -1) {
+        	Utils.showMsg(this, "Stored!");
+        } else {
+        	Utils.showMsg(this, "Updated!");
+        }
         Intent intent = new Intent(this, TeacherWordList.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
@@ -172,22 +221,36 @@ public class TeacherAnswer extends Activity {
     
     public void recordAnswer(View view){
        onRecord(startRecording);
+       Button recButton = (Button) findViewById(R.id.recButton);
        if (startRecording){
-          Utils.showMsg(this, "start recording"); 
+    	   recButton.setText("Stop Recording");
        } else {
-          Utils.showMsg(this, "stop recording"); 
+    	   recButton.setText("Start Recording");
        }
        startRecording = !startRecording;
     }
     
     public void playAnswer(View view) {
         onPlay(startPlaying);
+//        Button playButton = (Button) findViewById(R.id.playButton);
         if (startPlaying){
-          Utils.showMsg(this, "start playing"); 
+//        	playButton.setText("Stop");
+//          Utils.showMsg(this, "start playing"); 
        } else {
-          Utils.showMsg(this, "stop playing"); 
+//    	   playButton.setText("Play");
+//          Utils.showMsg(this, "stop playing"); 
        }
        startPlaying = !startPlaying;
+    }
+    
+    public void deletePhoto(View view) {
+    	Photo photo = new Photo(editId);
+    	WordListOpenHelper.getInstance(this).deletePhoto(photo);
+    	
+    	Utils.showMsg(this, "Deleted");
+        Intent intent = new Intent(this, TeacherWordList.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
 }

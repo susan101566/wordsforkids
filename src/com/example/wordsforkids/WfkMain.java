@@ -19,7 +19,7 @@ public class WfkMain extends Activity {
         if (!file.exists()) {
             file.mkdirs();
         }
-        Utils.showMsg(this, file.exists() + "");
+//        Utils.showMsg(this, file.exists() + "");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wfk_main);
     }
