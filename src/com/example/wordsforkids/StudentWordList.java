@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
@@ -32,6 +33,8 @@ import android.widget.TextView;
 public class StudentWordList extends Activity {
 	public final static String WORD_ID = "com.example.wordsforkids.WORD_ID";
 
+	Vector<String> scores;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -40,9 +43,10 @@ public class StudentWordList extends Activity {
 		setupActionBar();
 		final List<Photo> photos = WordListOpenHelper.getInstance(this).getAllPhotos();
 		Vector<String> pics = new Vector<String>();
-
+		scores = new Vector<String>();
 		for (Photo photo : photos) {
 		    pics.add(photo.getFilename());
+		    scores.add(photo.getScore()+"");
 		}
 
 		
@@ -130,7 +134,13 @@ public class StudentWordList extends Activity {
 
             ImageView image=(ImageView)vi.findViewById(R.id.imageView2);
             TextView text = (TextView)vi.findViewById(R.id.textView2);
-            text.setText(position + "");
+//            text.setText(position + "");
+            text.setText(scores.get(position));
+            if (Integer.parseInt(scores.get(position)) <= 0) {
+            	text.setTextColor(Color.parseColor("#FF0000"));
+            } else {
+            	text.setTextColor(Color.parseColor("#00FF00"));
+            }
             displayImage(data.get(position), image);
             return vi;
         }

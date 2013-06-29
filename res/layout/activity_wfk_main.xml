@@ -3,15 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
-    <Button android:layout_width="match_parent"
+    
+    <ImageView android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/student"
+        android:layout_gravity="center"
+        android:src="@drawable/sample_0"
+        android:contentDescription="@string/student"
         android:onClick="studentWordList" />
     
-    <Button android:layout_width="match_parent"
+    <ImageView android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/teacher"
-        android:onClick="teacherWordList" />
+        android:layout_gravity="center"
+        android:src="@drawable/sample_1"
+        android:contentDescription="@string/teacher"
+        android:onClick="teacherWordList"/>
     
 </LinearLayout>
