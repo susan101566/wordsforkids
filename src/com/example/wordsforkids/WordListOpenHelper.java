@@ -29,6 +29,7 @@ public class WordListOpenHelper extends SQLiteOpenHelper {
 	private static final String KEY_ID = "id";
 	private static final String KEY_FILENAME = "filename";
 	private static final String KEY_ANSWER = "answer";
+	private static final String KEY_SCORE = "score";
 	
 	private WordListOpenHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -38,7 +39,8 @@ public class WordListOpenHelper extends SQLiteOpenHelper {
 		String CREATE_PHOTOS_TABLE = "CREATE TABLE " + TABLE_PHOTOS + "("
 				+ KEY_ID + " INTEGER PRIMARY KEY," 
 				+ KEY_FILENAME + " TEXT NOT NULL,"
-				+ KEY_ANSWER + " TEXT NOT NULL" + ")";
+				+ KEY_ANSWER + " TEXT NOT NULL,"
+				+ KEY_SCORE + " INTEGER NOT NULL"+ ")";
 		db.execSQL(CREATE_PHOTOS_TABLE);
 	}
 
@@ -59,6 +61,7 @@ public class WordListOpenHelper extends SQLiteOpenHelper {
 		ContentValues values = new ContentValues();
 		values.put(KEY_FILENAME, photo.getFilename());
 		values.put(KEY_ANSWER, photo.getAnswer());
+		values.put(KEY_SCORE, photo.getScore());
 		
 		db.insert(TABLE_PHOTOS, null, values);
 		db.close();
@@ -75,7 +78,7 @@ public class WordListOpenHelper extends SQLiteOpenHelper {
 	        cursor.moveToFirst();
 	    
 	    Photo photo = new Photo(Integer.parseInt(cursor.getString(0)),
-	            cursor.getString(1), cursor.getString(2));
+	            cursor.getString(1), cursor.getString(2), Integer.parseInt(cursor.getString(3)));
 	    
 	    return photo;
 	}
@@ -96,7 +99,8 @@ public class WordListOpenHelper extends SQLiteOpenHelper {
 	            photo.setID(Integer.parseInt(cursor.getString(0)));
 	            photo.setFilename(cursor.getString(1));
 	            photo.setAnswer(cursor.getString(2));
-	            // Adding contact to list
+	            photo.setScore(Integer.parseInt(cursor.getString(3)));
+	            // Adding photo to list
 	            photoList.add(photo);
 	        } while (cursor.moveToNext());
 	    }
@@ -123,6 +127,7 @@ public class WordListOpenHelper extends SQLiteOpenHelper {
 	    ContentValues values = new ContentValues();
 	    values.put(KEY_FILENAME, photo.getFilename());
 	    values.put(KEY_ANSWER, photo.getAnswer());
+	    values.put(KEY_SCORE, photo.getScore());
 	 
 	    // updating row
 	    return db.update(TABLE_PHOTOS, values, KEY_ID + " = ?",

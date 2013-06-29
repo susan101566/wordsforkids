@@ -87,12 +87,14 @@ public class StudentAnswer extends Activity {
 //		Intent intent = new Intent(this, StudentWordList.class);
 //		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //		startActivity(intent);
-		
-		String correctAnswer = WordListOpenHelper.getInstance(this).getPhoto(id).getAnswer();
+		Photo photo = WordListOpenHelper.getInstance(this).getPhoto(id);
+		String correctAnswer = photo.getAnswer();
 		EditText editText = (EditText) findViewById(R.id.answer);
 		String inputText = editText.getText().toString();
 		if (correctAnswer.equalsIgnoreCase(inputText)) {
 			editText.setEnabled(false);
+			photo.incrementScore();
+			WordListOpenHelper.getInstance(this).updatePhoto(photo);
 			Toast.makeText(this, "Correct!", Toast.LENGTH_LONG).show();
 		} else {
 			Toast.makeText(this, "Wrong...", Toast.LENGTH_SHORT).show();
