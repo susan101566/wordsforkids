@@ -52,9 +52,6 @@ public class StudentAnswer extends Activity implements OnInitListener {
         Intent intent = getIntent();
         id = Integer.parseInt(intent.getStringExtra(StudentWordList.WORD_ID));
 
-        TextView idText = (TextView) findViewById(R.id.wordId);
-        idText.setText("Welcome!");
-
         ImageView img = (ImageView) findViewById(R.id.picture);
         FileInputStream in;
         try {
