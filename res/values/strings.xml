@@ -13,8 +13,11 @@
     <string name="new_word">New</string>
     <string name="title_activity_teacher_answer">Answer - Teacher</string>
     <string name="submit">Submit</string>
-	<string name="answer">Answer</string>
-	<string name="record">Record</string>
-	<string name="play">Play</string>
-    
+    <string name="answer">Answer</string>
+    <string name="record">Record</string>
+    <string name="play">Play</string>
+
+    <!-- COLORs -->
+    <color name="greenboard">#c4dcce</color>
+
 </resources>

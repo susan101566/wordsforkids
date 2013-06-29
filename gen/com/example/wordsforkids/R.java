@@ -10,6 +10,11 @@ package com.example.wordsforkids;
 public final class R {
     public static final class attr {
     }
+    public static final class color {
+        /**  COLORs 
+         */
+        public static final int greenboard=0x7f060000;
+    }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
 
@@ -34,19 +39,21 @@ public final class R {
         public static final int sample_7=0x7f02000a;
         public static final int sample_8=0x7f02000b;
         public static final int sample_9=0x7f02000c;
+        public static final int student_title=0x7f02000d;
+        public static final int teacher_title=0x7f02000e;
     }
     public static final class id {
-        public static final int action_settings=0x7f08000a;
-        public static final int answer=0x7f080001;
-        public static final int gridview=0x7f080003;
-        public static final int imageView1=0x7f080007;
-        public static final int imageView2=0x7f080005;
-        public static final int listView1=0x7f080004;
-        public static final int menu_settings=0x7f080009;
-        public static final int picture=0x7f080000;
-        public static final int submitButton=0x7f080002;
-        public static final int textView1=0x7f080008;
-        public static final int textView2=0x7f080006;
+        public static final int action_settings=0x7f09000a;
+        public static final int answer=0x7f090001;
+        public static final int gridview=0x7f090003;
+        public static final int imageView1=0x7f090007;
+        public static final int imageView2=0x7f090005;
+        public static final int listView1=0x7f090004;
+        public static final int menu_settings=0x7f090009;
+        public static final int picture=0x7f090000;
+        public static final int submitButton=0x7f090002;
+        public static final int textView1=0x7f090008;
+        public static final int textView2=0x7f090006;
     }
     public static final class layout {
         public static final int activity_student_answer=0x7f030000;
@@ -58,11 +65,11 @@ public final class R {
         public static final int listrow=0x7f030006;
     }
     public static final class menu {
-        public static final int activity_wfk_main=0x7f070000;
-        public static final int student_answer=0x7f070001;
-        public static final int student_word_list=0x7f070002;
-        public static final int teacher_answer=0x7f070003;
-        public static final int teacher_word_list=0x7f070004;
+        public static final int activity_wfk_main=0x7f080000;
+        public static final int student_answer=0x7f080001;
+        public static final int student_word_list=0x7f080002;
+        public static final int teacher_answer=0x7f080003;
+        public static final int teacher_word_list=0x7f080004;
     }
     public static final class string {
         public static final int action_settings=0x7f050006;
@@ -103,10 +110,10 @@ public final class R {
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f060000;
+        public static final int AppBaseTheme=0x7f070000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f060001;
+        public static final int AppTheme=0x7f070001;
     }
 }
