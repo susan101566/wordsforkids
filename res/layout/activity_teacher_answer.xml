@@ -16,21 +16,36 @@
         android:hint="@string/answer"
         android:textAlignment="center" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="recordAnswer"
-        android:text="@string/record" />
+    <LinearLayout android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:orientation="horizontal"
+    	android:layout_gravity="center"
+    	android:gravity="center">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="playAnswer"
-        android:text="@string/play" />
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="recordAnswer"
+            android:text="@string/record" 
+            android:layout_gravity="center"
+            android:padding="5dp"
+            style="@android:attr/buttonBarButtonStyle"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="playAnswer"
+            android:text="@string/play"
+            android:layout_gravity="center"
+            android:padding="5dp"
+            style="@android:attr/buttonBarButtonStyle" />
+    </LinearLayout>
 
 	<Button android:id="@+id/submitButton" 
 	    android:text="@string/submit"
-	    android:layout_width="wrap_content"
+	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:layout_gravity="center"
 	    android:onClick="submitAnswer" />
