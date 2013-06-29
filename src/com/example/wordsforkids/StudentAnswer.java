@@ -12,6 +12,7 @@ import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -90,9 +91,11 @@ public class StudentAnswer extends Activity {
 		Photo photo = WordListOpenHelper.getInstance(this).getPhoto(id);
 		String correctAnswer = photo.getAnswer();
 		EditText editText = (EditText) findViewById(R.id.answer);
+		Button button = (Button) findViewById(R.id.submitButton);
 		String inputText = editText.getText().toString();
 		if (correctAnswer.equalsIgnoreCase(inputText)) {
 			editText.setEnabled(false);
+			button.setEnabled(false);
 			photo.incrementScore();
 			WordListOpenHelper.getInstance(this).updatePhoto(photo);
 			Toast.makeText(this, "Correct!", Toast.LENGTH_LONG).show();
