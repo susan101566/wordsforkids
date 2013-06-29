@@ -24,14 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class StudentAnswer extends Activity implements OnInitListener {
-
-    // *** TTS START ***/ // Also the implements OnInitListener.
-    // TTS object
-    private TextToSpeech TTS;
-    // status check code
-    private int DATA_CHECK_CODE = 0;
-    // *** TTS END ***/
+public class StudentAnswer extends Activity {
 
     private int id;
 
@@ -41,13 +34,6 @@ public class StudentAnswer extends Activity implements OnInitListener {
         setContentView(R.layout.activity_student_answer);
         // Show the Up button in the action bar.
         setupActionBar();
-
-        // *** TTS START ***/
-        // check for TTS data
-        Intent checkTTSIntent = new Intent();
-        checkTTSIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
-        startActivityForResult(checkTTSIntent, DATA_CHECK_CODE);
-        // *** TTS END ***/
 
         Intent intent = getIntent();
         id = Integer.parseInt(intent.getStringExtra(StudentWordList.WORD_ID));
@@ -65,17 +51,6 @@ public class StudentAnswer extends Activity implements OnInitListener {
             e.printStackTrace();
         }
     }
-
-    // *** TTS START ***/
-    public void onDestroy() {
-        if (TTS != null) {
-            TTS.stop();
-            TTS.shutdown();
-        }
-        super.onDestroy();
-    }
-
-    // *** TTS END ***/
 
     /**
      * Set up the {@link android.app.ActionBar}.
@@ -129,42 +104,4 @@ public class StudentAnswer extends Activity implements OnInitListener {
             Toast.makeText(this, "Wrong...", Toast.LENGTH_SHORT).show();
         }
     }
-
-    // *** TTS START ***/
-    public void speakAnswer(View view) {
-        Photo photo = WordListOpenHelper.getInstance(this).getPhoto(id);
-        String correctAnswer = photo.getAnswer();
-        speak(correctAnswer);
-    }
-
-    private void speak(String text) {
-        TTS.speak(text, TextToSpeech.QUEUE_FLUSH, null);
-    }
-
-    // act on result of TTS data check
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == DATA_CHECK_CODE) {
-            if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS) {
-                // the user has the necessary data - create the TTS
-                TTS = new TextToSpeech(this, this);
-            } else {
-                // no data - install it now
-                Intent installTTSIntent = new Intent();
-                installTTSIntent.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
-                startActivity(installTTSIntent);
-            }
-        }
-    }
-
-    // setup TTS
-    public void onInit(int initStatus) {
-        // check for successful instantiation
-        if (initStatus == TextToSpeech.SUCCESS) {
-            if (TTS.isLanguageAvailable(Locale.US) == TextToSpeech.LANG_AVAILABLE)
-                TTS.setLanguage(Locale.US);
-        } else if (initStatus == TextToSpeech.ERROR) {
-            Toast.makeText(this, "Sorry! Text To Speech failed...", Toast.LENGTH_LONG).show();
-        }
-    }
-    // *** TTS END ***/
 }
