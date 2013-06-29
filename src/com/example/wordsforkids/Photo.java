@@ -1,7 +1,7 @@
 package com.example.wordsforkids;
 
 public class Photo {
-	private int _id;
+	private int _id = -1;
 	private String _filename;
 	private String _answer;
 	private int _score;

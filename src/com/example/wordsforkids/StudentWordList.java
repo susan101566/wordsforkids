@@ -1,15 +1,32 @@
 package com.example.wordsforkids;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.List;
+import java.util.Vector;
+
+import com.example.utils.Utils;
+
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class StudentWordList extends Activity {
 	public final static String WORD_ID = "com.example.wordsforkids.WORD_ID";
@@ -20,20 +37,29 @@ public class StudentWordList extends Activity {
 		setContentView(R.layout.activity_student_word_list);
 		// Show the Up button in the action bar.
 		setupActionBar();
+		final List<Photo> photos = WordListOpenHelper.getInstance(this).getAllPhotos();
+		Vector<String> pics = new Vector<String>();
+
+		for (Photo photo : photos) {
+		    pics.add(photo.getFilename());
+		}
+
 		
 		GridView gridview = (GridView) findViewById(R.id.gridview);
-		gridview.setAdapter(new ImageAdapter(this));
-		
+		LazyAdapter adapter = new LazyAdapter(this, pics);
+ 
+        gridview.setAdapter(adapter);
+ 
+		final Context me = this;
 		gridview.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Intent intent = new Intent(StudentWordList.this, StudentAnswer.class);
-				intent.putExtra(WORD_ID, ""+position);
+				intent.putExtra(WORD_ID, photos.get(position).getID()+"");
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
 				intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 				startActivity(intent);
-//				Toast.makeText(StudentWordList.this, "" + position, Toast.LENGTH_SHORT).show();
 			}
 		});
 	}
@@ -70,5 +96,56 @@ public class StudentWordList extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	
+    public class LazyAdapter extends BaseAdapter {
+        
+        private Activity activity;
+        private Vector<String> data;
+        private LayoutInflater inflater = null;
+        
+        public LazyAdapter(Activity a, Vector<String> d) {
+            activity = a;
+            data=d;
+            inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }
+
+        public int getCount() {
+            return data.size();
+        }
+
+        public Object getItem(int position) {
+            return position;
+        }
+
+        public long getItemId(int position) {
+            return position;
+        }
+        
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View vi=convertView;
+            if(convertView==null)
+                vi = inflater.inflate(R.layout.gridbox, null);
+
+            ImageView image=(ImageView)vi.findViewById(R.id.imageView2);
+            TextView text = (TextView)vi.findViewById(R.id.textView2);
+            text.setText(position + "");
+            displayImage(data.get(position), image);
+            return vi;
+        }
+    }
+    
+    public void displayImage(String url, ImageView imageView) {
+        FileInputStream in;
+        try {
+            in = new FileInputStream(url);
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = 10;
+            Bitmap bmp = BitmapFactory.decodeStream(in, null, options);
+            imageView.setImageBitmap(bmp);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

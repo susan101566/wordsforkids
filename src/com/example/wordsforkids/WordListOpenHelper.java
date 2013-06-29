@@ -69,13 +69,9 @@ public class WordListOpenHelper extends SQLiteOpenHelper {
 		ContentValues values = new ContentValues();
 		values.put(KEY_FILENAME, photo.getFilename());
 		values.put(KEY_ANSWER, photo.getAnswer());
-<<<<<<< HEAD
-		boolean result = db.insert(TABLE_PHOTOS, null, values) < 0 ? false : true;
-=======
 		values.put(KEY_SCORE, photo.getScore());
 		
-		db.insert(TABLE_PHOTOS, null, values);
->>>>>>> a24f8e7ddd6d4304e6c4f00a3d5b113c74d501c6
+		boolean result = db.insert(TABLE_PHOTOS, null, values)< 0 ? false : true;
 		db.close();
 		return result;
 	}
@@ -85,7 +81,7 @@ public class WordListOpenHelper extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getReadableDatabase();
 		
 		Cursor cursor = db.query(TABLE_PHOTOS, new String[] { KEY_ID,
-	            KEY_FILENAME, KEY_ANSWER }, KEY_ID + "=?",
+	            KEY_FILENAME, KEY_ANSWER , KEY_SCORE}, KEY_ID + "=?",
 	            new String[] { String.valueOf(id) }, null, null, null, null);
 	    if (cursor != null)
 	        cursor.moveToFirst();

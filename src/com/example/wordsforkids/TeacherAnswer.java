@@ -3,7 +3,8 @@ package com.example.wordsforkids;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import utils.Utils;
+import com.example.utils.Utils;
+
 
 import android.os.Bundle;
 import android.app.Activity;
