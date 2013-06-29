@@ -1,11 +1,17 @@
 package com.example.wordsforkids;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+
 
 public class ImageAdapter extends BaseAdapter {
 	private Context mContext;
@@ -17,19 +23,22 @@ public class ImageAdapter extends BaseAdapter {
 	
 	@Override
 	public int getCount() {
-		return mThumbIds.length;
+		return WordListOpenHelper.getInstance(mContext).getPhotosCount();
 	}
 
 	@Override
 	public Object getItem(int position) {
 		// TODO Auto-generated method stub
 		return null;
+//		return WordListOpenHelper.getInstance(mContext).getPhoto(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
 		// TODO Auto-generated method stub
 		return 0;
+		
+//		return WordListOpenHelper.getInstance(mContext).getPhoto(position).getID();
 	}
 
 	@Override
@@ -44,29 +53,19 @@ public class ImageAdapter extends BaseAdapter {
 			imageView = (ImageView) convertView;
 		}
 		
-		imageView.setImageResource(mThumbIds[position]);
-        return imageView;
+
+        FileInputStream in;
+		try {
+			in = new FileInputStream(WordListOpenHelper.getInstance(mContext).getPhoto(position).getFilename());
+			BitmapFactory.Options options = new BitmapFactory.Options();
+	        options.inSampleSize = 10;
+	        Bitmap bmp = BitmapFactory.decodeStream(in, null, options);
+			
+			imageView.setImageBitmap(bmp);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return imageView;
 	}
 
-    // references to images
-    private Integer[] mThumbIds = {
-            R.drawable.sample_2, R.drawable.sample_3,
-            R.drawable.sample_4, R.drawable.sample_5,
-            R.drawable.sample_6, R.drawable.sample_7,
-            R.drawable.sample_8, R.drawable.sample_9,
-            R.drawable.sample_10, R.drawable.sample_11,
-            R.drawable.sample_0, R.drawable.sample_1,
-            R.drawable.sample_2, R.drawable.sample_3,
-            R.drawable.sample_4, R.drawable.sample_5,
-            R.drawable.sample_6, R.drawable.sample_7,
-            R.drawable.sample_8, R.drawable.sample_9,
-            R.drawable.sample_10, R.drawable.sample_11,
-            R.drawable.sample_0, R.drawable.sample_1,
-            R.drawable.sample_2, R.drawable.sample_3,
-            R.drawable.sample_4, R.drawable.sample_5,
-            R.drawable.sample_6, R.drawable.sample_7,
-            R.drawable.sample_8, R.drawable.sample_9,
-            R.drawable.sample_10, R.drawable.sample_11,
-            R.drawable.sample_0, R.drawable.sample_1
-    };
 }
