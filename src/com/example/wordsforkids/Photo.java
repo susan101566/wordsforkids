@@ -8,6 +8,10 @@ public class Photo {
 	
 	public Photo() {}
 	
+	public Photo(int id) {
+		this._id = id;
+	}
+	
 	public Photo(int id, String filename, String answer) {
 		this._id = id;
 		this._filename = filename;

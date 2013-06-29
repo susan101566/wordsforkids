@@ -51,4 +51,11 @@
 	    android:layout_gravity="center"
 	    android:onClick="submitAnswer" />
 	
+	<Button android:id="@+id/deleteButton"
+	    android:text="@string/delete"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="bottom"
+	    android:onClick="deletePhoto" />
+	
 </LinearLayout>

@@ -40,7 +40,10 @@ public class TeacherAnswer extends Activity {
 
         Intent intent = getIntent();
         String word_id = intent.getStringExtra(TeacherWordList.WORD_ID);
-        if (word_id == "new") {
+        if (word_id == null) {
+        	editId = -1;
+        }
+        else if (word_id.contains("n")) {
         	editId = -1;
         } else {
         	editId = Integer.parseInt(word_id);
@@ -60,6 +63,9 @@ public class TeacherAnswer extends Activity {
 		    } catch (FileNotFoundException e) {
 		        Toast.makeText(this, "file not found", Toast.LENGTH_LONG).show();
 		    }
+		    
+		    Button deleteButton = (Button) findViewById(R.id.deleteButton);
+		    deleteButton.setVisibility(View.GONE); // for gone. 
         } else {
         	FileInputStream in;
         	Photo photo = WordListOpenHelper.getInstance(this).getPhoto(editId);
@@ -235,6 +241,16 @@ public class TeacherAnswer extends Activity {
 //          Utils.showMsg(this, "stop playing"); 
        }
        startPlaying = !startPlaying;
+    }
+    
+    public void deletePhoto(View view) {
+    	Photo photo = new Photo(editId);
+    	WordListOpenHelper.getInstance(this).deletePhoto(photo);
+    	
+    	Utils.showMsg(this, "Deleted");
+        Intent intent = new Intent(this, TeacherWordList.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
 }

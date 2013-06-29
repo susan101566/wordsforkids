@@ -16,5 +16,6 @@
 	<string name="answer">Answer</string>
 	<string name="record">Start Recording</string>
 	<string name="play">Play</string>
+	<string name="delete">Delete</string>
     
 </resources>
